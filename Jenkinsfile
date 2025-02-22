@@ -1,28 +1,31 @@
 pipeline {
     agent any
+    environment {
+        DOTNET_CLI_TELEMETRY_OPTOUT = '1'
+    }
     stages {
-      stage('Checkout') {
+        stage('Checkout') {
             steps {
-                echo 'Building the application...'
+                echo 'Checking out the code...'
                 checkout scm
             }
         }
-      stage('Restore Dependencies') {
+        stage('Restore Dependencies') {
             steps {
-                echo 'Building the application...'
-                bat 'dotnet restore' 
+                echo 'Restoring dependencies...'
+                bat 'dotnet restore HouseRentingSystem.sln'
             }
         }
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                bat 'dotnet build' 
+                bat 'dotnet build HouseRentingSystem.sln --configuration Release'
             }
         }
         stage('Test') {
             steps {
-                echo 'Executing tests...'
-                bat 'dotnet test' 
+                echo 'Running tests...'
+                bat 'dotnet test HouseRentingSystem.sln --configuration Release --no-build --verbosity normal'
             }
         }
     }
