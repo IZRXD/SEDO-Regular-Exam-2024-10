@@ -4,16 +4,11 @@ pipeline {
         DOTNET_CLI_TELEMETRY_OPTOUT = '1'
     }
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checking out the code...'
-                checkout scm
-            }
-        }
+        
         stage('Restore Dependencies') {
             steps {
                 echo 'Restoring dependencies...'
-                bat 'dotnet restore HouseRentingSystem.sln'
+                bat 'dotnet restore'
             }
         }
         stage('Build') {
